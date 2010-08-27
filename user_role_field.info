@@ -1,0 +1,8 @@
+; $Id$
+name = User role field
+description = Define user fields by role
+dependencies[] = field_ui
+package = CCK
+core = 7.x
+files[] = user_role_field.module
+files[] = user_role_field.admin.inc
