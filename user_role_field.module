@@ -51,6 +51,12 @@ function user_role_field_field_access($op, $field, $obj_type, $object, $account)
     return;
   }
 
+  // If the user object doesn't have the roles property, we get here through
+  // the views module for example. In that case we want the data to display.
+  // To revisit in case there are other cases.
+  if (!isset ($object->roles))
+      return true;
+
   $matching_roles = array_intersect_key ($object->roles, $roles);
   return !empty ($matching_roles);
 }
