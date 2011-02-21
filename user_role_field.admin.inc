@@ -24,7 +24,7 @@ function _user_role_field_field_settings_form_alter(&$form, $form_state, $form_i
   // Enhance the field settings form with role visibility
   $roles = user_roles ();
   $form['field']['settings']['user_role_field'] = array(
-    '#title' => t('Role visibility'),
+    '#title' => t('Apply only to'),
     '#type' => 'checkboxes',
     '#checkall' => TRUE,
     '#options' => $roles,
