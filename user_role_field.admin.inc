@@ -21,7 +21,8 @@ function _user_role_field_field_settings_form_alter(&$form, $form_state, $form_i
     return;
   }
 
-  // Enhance the field settings form with role visibility
+  // Enhance the field settings form with role visibility, but without
+  // the anonymouse user.
   $roles = user_roles ();
   $form['field']['settings']['user_role_field'] = array(
     '#title' => t('Apply only to'),
@@ -29,7 +30,7 @@ function _user_role_field_field_settings_form_alter(&$form, $form_state, $form_i
     '#checkall' => TRUE,
     '#options' => $roles,
     '#default_value' => _user_role_field_roles($field),
-    '#description' => t('Use these options to make a field visible for a specific role. If no role is set, the field is visible to all roles. If the anonymous role is set, the field will show up in the user registration form.'),
+    '#description' => t('Use these options to make a field visible for a specific role. If no role is set, the field is visible to all roles. If "Display on user registration form" is ticked and some roles have been set here, make sure to set the anonymous user role as well, else the field will not be shown.'),
     '#weight' => -1,
   );
 

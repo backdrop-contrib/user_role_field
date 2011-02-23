@@ -8,16 +8,6 @@ function user_role_field_form_alter(&$form, $form_state, $form_id) {
     module_load_include('inc', 'user_role_field', 'user_role_field.admin');
     return _user_role_field_field_settings_form_alter($form, $form_state, $form_id);
   }
-  elseif ($form_id == 'user_register_form') {
-    // Add fields to the registration form. Note that only those fields that
-    // can be created by the anonymous user are displayed.
-    // If you don't have anonymous fields, you get an ugly empty box. Don't
-    // know how to fix that yet.
-    $form['fields'] = array (
-      '#type' => 'fieldset',
-    );
-    field_attach_form('user', $form['#user'], $form['fields'], $form_state);
-  }
 }
 
 /**
