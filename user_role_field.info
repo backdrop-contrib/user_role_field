@@ -1,4 +1,3 @@
-; $Id$
 name = User role field
 description = Define user fields by role
 dependencies[] = field_ui
