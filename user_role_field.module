@@ -34,6 +34,10 @@ function user_role_field_field_access($op, $field, $obj_type, $object, $account)
   if (($obj_type != 'user') && ($obj_type != 'profile2'))
     return true;
 
+  // Admin user can see all fields when creating a new user.
+  if (arg(2) == 'create' && arg(0) == 'admin' && user_access ('administer permissions'))
+    return true;
+
   // If the object type is profile2, we need to load the user owning profile2 object
   if ($obj_type == 'profile2' && empty($object->uid))
     $object = user_load ($object->uid);
