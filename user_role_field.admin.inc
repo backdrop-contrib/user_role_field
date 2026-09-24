@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Administer user roles on fields.
+ */
+
+/**
  * Alter the field settings form.
  */
 function _user_role_field_field_settings_form_alter(&$form, $form_state, $form_id) {

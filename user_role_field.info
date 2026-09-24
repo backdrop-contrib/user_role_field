@@ -1,5 +1,6 @@
 name = User role field
 description = Define user fields by role
-dependencies[] = field_ui
+backdrop = 1.x
+type = module
 package = Fields
-core = 7.x
+dependencies[] = field_ui
