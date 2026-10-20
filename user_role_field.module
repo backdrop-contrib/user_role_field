@@ -72,13 +72,11 @@ function user_role_field_field_access($op, $field, $entity_type, $entity, $accou
   }
 
   // The user hasn't been created yet, such as on a registration page.
-  // It will have authenticated role by default so won't match with the
-  // anonymous user. So check instead if roles includes anonymous role.
-  if (empty($entity->uid) && in_array(BACKDROP_ANONYMOUS_ROLE, $roles)) {
+  if (empty($entity->uid) && $account instanceof AnonymousUser) {
     return TRUE;
   }
 
-  $matching_roles = count(array_intersect($entity->roles, $roles));
+  $matching_roles = (bool) count(array_intersect($entity->roles, $roles));
   $negate = $field['settings']['user_role_field']['negate'] ?? 0;
   if ($negate) {
     return !$matching_roles;
