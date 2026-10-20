@@ -6,7 +6,7 @@
  */
 
 /**
- * Hook into field edit form, user registration form and profile2 forms.
+ * Hook into field edit form, user registration form and profile forms.
  */
 function user_role_field_form_alter(&$form, $form_state, $form_id) {
   if (isset($form['instance']) && ($form['instance']['entity_type']['#value'] == 'user' || $form['instance']['entity_type']['#value'] == 'profile')
@@ -37,7 +37,7 @@ function user_role_field_permission() {
  *   Array of roles.
  */
 function _user_role_field_roles($field) {
-  return (isset($field['settings']['user_role_field']) && is_array($field['settings']['user_role_field']) ? array_filter($field['settings']['user_role_field']) : array());
+  return (isset($field['settings']['user_role_field']['roles']) && is_array($field['settings']['user_role_field']['roles']) ? array_filter($field['settings']['user_role_field']['roles']) : array());
 }
 
 /**
@@ -72,12 +72,16 @@ function user_role_field_field_access($op, $field, $entity_type, $entity, $accou
   }
 
   // The user hasn't been created yet, such as on a registration page.
-  // It will have authenticated role by default so won't match with the
-  // anonymous user. So check instead if roles includes anonymous role.
-  if (empty($entity->uid) && in_array(BACKDROP_ANONYMOUS_ROLE, $roles)) {
+  if (empty($entity->uid) && $account instanceof AnonymousUser) {
     return TRUE;
   }
 
-  $matching_roles = array_intersect($entity->roles, $roles);
-  return !empty($matching_roles);
+  $matching_roles = (bool) count(array_intersect($entity->roles, $roles));
+  $negate = $field['settings']['user_role_field']['negate'] ?? 0;
+  if ($negate) {
+    return !$matching_roles;
+  }
+  else {
+    return $matching_roles;
+  }
 }
